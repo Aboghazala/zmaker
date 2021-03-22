@@ -1,12 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: test-action2
+name: release-handle
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
+  #push:
+  #  branches: [ master ]
+  release:
+    types: [created]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,11 +32,19 @@ jobs:
         run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: create windows release
         run: |
           git clone https://github.com/firedm/FireDM
           tree .
           cd ./FireDM/scripts/exe_build
           python3 ./exe-quickbuild.py
           tree .
+
+      # upload file to github release page
+      - name: Upload the artifacts
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'FireDM*.zip'
 
