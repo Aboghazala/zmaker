@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -34,5 +32,9 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          git clone https://github.com/firedm/FireDM
+          tree .
+          cd ./FireDM/scripts/exe_build
+          python3 ./exe-quickbuild.py
+          tree .
+
