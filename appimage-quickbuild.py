@@ -60,7 +60,7 @@ if not os.path.isdir(AppDir):
         if not os.path.isfile(z_fp):
             download(url, z_fp)
 
-        subprocess.run('tree .')
+        subprocess.run('tree .', shell=True)
 
         # extract and rename
         print('extracting, please wait ...')
@@ -69,12 +69,12 @@ if not os.path.isdir(AppDir):
         cmd += f' & "{z_fp}" --appimage-extract'  # extract appimage as "squashfs-root"
         subprocess.run(cmd, shell=True)
 
-        subprocess.run('tree .')
+        subprocess.run('tree .', shell=True)
 
         cmd = f'mv "{extracted_squashfs}" "{AppDir}"'  # rename
         subprocess.run(cmd, shell=True)
 
-        subprocess.run('tree .')
+        subprocess.run('tree .', shell=True)
 
     else:
         print('Failed to download latest version, download manually '
