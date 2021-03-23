@@ -51,4 +51,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: './FireDM/scripts/appimage/*.AppImage ./FireDM/scripts/exe_build/*.zip'
+          args: './FireDM/scripts/appimage/FireDM*.AppImage ./FireDM/scripts/exe_build/FireDM*.zip'
