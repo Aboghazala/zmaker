@@ -64,8 +64,8 @@ if not os.path.isdir(AppDir):
 
         # extract and rename
         print('extracting, please wait ...')
-        cmd = f'cd "{build_folder}"'  # make executable
-        cmd += f' & chmod +x "{z_fp}"'  # make executable
+        cmd = f'cd "{build_folder}"'
+        cmd += f' & sudo chmod +x "{z_fp}"'  # make executable
         cmd += f' & "{z_fp}" --appimage-extract'  # extract appimage as "squashfs-root"
         subprocess.run(cmd, shell=True)
 

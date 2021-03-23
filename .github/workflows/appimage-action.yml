@@ -28,7 +28,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: create binaries
         run: |
-          sudo apt-get install tree
+          #sudo apt-get install tree
           git clone https://github.com/firedm/FireDM.git
           cp ./appimage-quickbuild.py ./FireDM/scripts/appimage/
           cd ./FireDM/scripts/appimage
