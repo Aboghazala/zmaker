@@ -33,7 +33,7 @@ jobs:
           python3 ./appimage-quickbuild.py
           ls .
 
-      # upload file to github release page
+      # upload file to github release page 00
       #- name: Upload the artifacts
         #uses: skx/github-action-publish-binaries@master
         #env:
