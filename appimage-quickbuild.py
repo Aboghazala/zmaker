@@ -60,6 +60,8 @@ if not os.path.isdir(AppDir):
         if not os.path.isfile(z_fp):
             download(url, z_fp)
 
+        subprocess.run('tree .')
+
         # extract and rename
         print('extracting, please wait ...')
         cmd = f'cd "{build_folder}"'  # make executable
@@ -67,13 +69,17 @@ if not os.path.isdir(AppDir):
         cmd += f' & "{z_fp}" --appimage-extract'  # extract appimage as "squashfs-root"
         subprocess.run(cmd, shell=True)
 
+        subprocess.run('tree .')
+
         cmd = f'mv "{extracted_squashfs}" "{AppDir}"'  # rename
         subprocess.run(cmd, shell=True)
+
+        subprocess.run('tree .')
 
     else:
         print('Failed to download latest version, download manually '
               'from https://github.com/firedm/FireDM/releases/latest')
-        exit()
+        exit(1)
 
 lib_folder = f'{AppDir}/usr/lib/python3.6/site-packages'
 
@@ -117,7 +123,7 @@ Keywords=Internet;download
 desktop_fp1 = f'{AppDir}/firedm.desktop'
 desktop_fp2 = f'{AppDir}/usr/share/applications/firedm.desktop'
 print('check if folder exist "{AppDir}/usr/share/applications/":', os.path.isdir(os.path.dirname(desktop_fp2)))
-os.makedirs(os.path.dirname(desktop_fp2), exist_ok=True)
+# os.makedirs(os.path.dirname(desktop_fp2), exist_ok=True)
 with open(desktop_fp1, 'w') as f1:
     with open(desktop_fp2, 'w') as f2:
         f1.write(contents)
