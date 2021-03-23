@@ -39,8 +39,8 @@ jobs:
           #cd ./FireDM/scripts/exe_build
           #python3 ./exe-quickbuild.py
           tree .
-          md ./1
-          md ./2
+          mkdir ./1
+          mkdir ./2
           cp ./testfile.txt ./1/exe.zip
           cp ./testfile.txt ./2/exe.AppImage
 
