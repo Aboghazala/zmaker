@@ -32,13 +32,15 @@ jobs:
         run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: create windows release
+      - name: create binaries
         run: |
           git clone https://github.com/firedm/FireDM
-          #tree .
+          cp ./appimage-quickbuild.py ./FireDM/scripts/appimage/
+          # windows
           cd ./FireDM/scripts/exe_build
           python3 ./exe-quickbuild.py
 
+          # linux
           cd ..
           cd ./appimage
           python3 ./appimage-quickbuild.py
