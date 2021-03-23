@@ -39,7 +39,10 @@ jobs:
           #cd ./FireDM/scripts/exe_build
           #python3 ./exe-quickbuild.py
           tree .
-          mv ./testfile.txt ./myreleasefile.txt
+          md ./1
+          md ./2
+          cp ./testfile.txt ./1/exe.zip
+          cp ./testfile.txt ./2/exe.AppImage
 
       # upload file to github release page
       - name: Upload the artifacts
@@ -47,5 +50,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: 'myreleasefile.txt'
+          args: './2/*.AppImage ./1/*.zip'
 
