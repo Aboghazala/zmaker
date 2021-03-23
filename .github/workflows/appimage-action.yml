@@ -28,7 +28,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: create binaries
         run: |
-          git clone https://github.com/firedm/FireDM
+          git clone https://github.com/firedm/FireDM.git
           copy ./appimage-quickbuild.py ./FireDM/scripts/appimage/
           cd ./FireDM/scripts/appimage
           python3 ./appimage-quickbuild.py
