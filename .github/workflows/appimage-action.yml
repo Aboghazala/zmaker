@@ -29,7 +29,7 @@ jobs:
       - name: create binaries
         run: |
           git clone https://github.com/firedm/FireDM.git
-          copy ./appimage-quickbuild.py ./FireDM/scripts/appimage/
+          cp ./appimage-quickbuild.py ./FireDM/scripts/appimage/
           cd ./FireDM/scripts/appimage
           python3 ./appimage-quickbuild.py
           ls .
