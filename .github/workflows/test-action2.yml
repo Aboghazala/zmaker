@@ -24,8 +24,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      #- run: sudo apt-get install tree
-      #- run: tree .
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -36,11 +34,12 @@ jobs:
         run: |
           git clone https://github.com/firedm/FireDM
           cp ./appimage-quickbuild.py ./FireDM/scripts/appimage/
-          # windows
+
+          # windows zip file
           cd ./FireDM/scripts/exe_build
           python3 ./exe-quickbuild.py
 
-          # linux
+          # linux appimage file
           cd ..
           cd ./appimage
           python3 ./appimage-quickbuild.py
