@@ -46,4 +46,4 @@ jobs:
       - name: create pre-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        python3 ./create_new_release.py $GITHUB_TOKEN
+        run: python3 ./create_new_release.py $GITHUB_TOKEN
