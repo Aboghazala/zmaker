@@ -2,9 +2,11 @@ import json, sys
 from urllib.request import Request, urlopen
 
 token = sys.argv[1]
+with open('testfile.txt') as f:
+        tag = f.read()
 
 url = 'https://api.github.com/repos/Aboghazala/zmaker/releases'
-data = {"tag_name": "v6-remote", "name": "my v6 - remote release", "prerelease": True, "draft": False,
+data = {"tag_name": tag, "name": f"my release - {tag}", "prerelease": True, "draft": False,
         "body": "this is the body description"}
 headers = {'Accept': 'application/vnd.github.v3+json', 'Authorization': f'token {token}'}
 
