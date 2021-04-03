@@ -5,10 +5,9 @@ name: release-handle
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  #push:
-  #  branches: [ master ]
-  release:
-    types: [created]
+  push:
+    paths:
+      - 'testfile.txt'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,7 +32,6 @@ jobs:
       - name: create binaries
         run: |
           git clone https://github.com/firedm/FireDM
-          cp ./appimage-quickbuild.py ./FireDM/scripts/appimage/
 
           # windows zip file
           cd ./FireDM/scripts/exe_build
@@ -44,10 +42,16 @@ jobs:
           cd ./appimage
           python3 ./appimage-quickbuild.py
 
-      # upload file to github release page
-      - name: Upload the artifacts
-        uses: skx/github-action-publish-binaries@master
+      # making pre-release
+      - name: create pre-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: './FireDM/scripts/appimage/FireDM*.AppImage ./FireDM/scripts/exe_build/FireDM*.zip'
+        python3 ./create_new_release.py $GITHUB_TOKEN
+
+      # upload file to github release page
+#      - name: Upload the artifacts
+#        uses: skx/github-action-publish-binaries@master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          args: './FireDM/scripts/appimage/FireDM*.AppImage ./FireDM/scripts/exe_build/FireDM*.zip'

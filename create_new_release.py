@@ -1,0 +1,18 @@
+import json, sys
+from urllib.request import Request, urlopen
+
+token = sys.argv[1]
+
+url = 'https://api.github.com/repos/Aboghazala/zmaker/releases'
+data = {"tag_name": "v6-remote", "name": "my v6 - remote release", "prerelease": True, "draft": False,
+        "body": "this is the body description"}
+headers = {'Accept': 'application/vnd.github.v3+json', 'Authorization': f'token {token}'}
+
+data = json.dumps(data)
+data = str(data).encode('utf-8')
+
+request = Request(url, headers=headers, data=data)
+
+res = urlopen(request)
+print(res.headers)
+print(res.read())
