@@ -41,7 +41,7 @@ jobs:
       - name: create linux binary "AppImage"
         run: |
           # linux appimage file
-          cd ..
+          # cd ..
           cd ./FireDM/scripts/appimage
           # python3 ./appimage-quickbuild.py
 
