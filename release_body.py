@@ -2,6 +2,8 @@ import os, re
 
 current_folder = os.path.dirname(__file__)
 project_folder = os.path.dirname(current_folder)
+print('current_folder:', current_folder)
+print('project_folder:', project_folder)
 
 body = f"""# Release info:
 **Windows: [.zip file]**
