@@ -52,7 +52,7 @@ jobs:
       #  run: python3 ./create_new_release.py ${{ secrets.GITHUB_TOKEN }}
       - name: get version name
         run: |
-          echo "version=$(cat ./testfile.txt)" >> $GITHUB_ENV
+          echo "version=$(cat ./testfile.txt | grep -Po '\d+.\d+.\d+')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
