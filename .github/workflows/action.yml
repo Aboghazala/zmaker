@@ -36,14 +36,14 @@ jobs:
         run: |
           # windows zip file
           cd ./FireDM/scripts/exe_build
-          # python3 ./exe-quickbuild.py
+          python3 ./exe-quickbuild.py
 
       - name: create linux binary "AppImage"
         run: |
           # linux appimage file
           # cd ..
           cd ./FireDM/scripts/appimage
-          # python3 ./appimage-quickbuild.py
+          python3 ./appimage-quickbuild.py
 
       # making pre-release
       #- name: create pre-release
@@ -69,14 +69,15 @@ jobs:
           draft: true
           prerelease: false
 
-#      # upload file to github release page 00
-#      - name: Upload the artifacts
-#        uses: skx/github-action-publish-binaries@master
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          args: './FireDM/scripts/appimage/*.AppImage ./FireDM/scripts/exe_build/*.zip'
+      # upload file to github release page 00
+      - name: Upload the artifacts
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ steps.create_release.outputs.id }}
+          args: './FireDM/scripts/appimage/*.AppImage ./FireDM/scripts/exe_build/*.zip'
 
-      - name: Print the URL of the release draft
-#        if: steps.create_release.outputs.id != ''
-        run: echo release id is ${{ steps.create_release.outputs.id }}
+#      - name: Print the URL of the release draft
+##        if: steps.create_release.outputs.id != ''
+#        run: echo release id is ${{ steps.create_release.outputs.id }}
