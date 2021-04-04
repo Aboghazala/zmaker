@@ -1,10 +1,8 @@
-# This is a basic workflow to help you get started with Actions
+name: draft-relese
 
-name: release-handle
-
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Triggers the workflow on "version.py" file changed
   push:
     paths:
       - 'testfile.txt'
@@ -12,47 +10,26 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-   
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
       - name: clone FireDM
         run: git clone https://github.com/firedm/FireDM
 
-      - name: create windows binary
+      - name: get version name and changelog
         run: |
-          # windows zip file
-          cd ./FireDM/scripts/exe_build
-          python3 ./exe-quickbuild.py
-
-      - name: create linux binary "AppImage"
-        run: |
-          # linux appimage file
-          # cd ..
-          cd ./FireDM/scripts/appimage
-          python3 ./appimage-quickbuild.py
-
-      # making pre-release
-      #- name: create pre-release
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #  run: python3 ./create_new_release.py ${{ secrets.GITHUB_TOKEN }}
-      - name: get version name
-        run: |
-          echo "version=$(cat ./testfile.txt | grep -Po '\d+.\d+.\d+')" >> $GITHUB_ENV
+          echo "version=$(cat ./FireDM/firedm/version.py | grep -Po '\d+\.\d+\.\d+')" >> $GITHUB_ENV
+          echo "changelog=$(sed 's/\r$//' ./FireDM/ChangeLog.txt | sed -e '/^$/,$d')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -61,19 +38,30 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ env.version }}
-          release_name: My Release version ${{ env.version }}
+          release_name: FireDM version ${{ env.version }}
           body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+            # Release info:
+            **Windows: [.zip file]**
+            - Portable version for windows 32bit and 64bit, no installation needed, just extract to any folder and run FireDM.exe file
+            - ffmpeg.exe included, you can download latest version [here](https://ffmpeg.zeranoe.com/builds/)
+            - The binary version ".exe" prepared by "cx_freeze" on python 3.8, windows8x32bit
+            ---
+
+            **Linux: [.AppImage file]**
+            - AppImage file, portable, no installation needed, download and make file executable by right clicking the file>Properties>Permissions>Allow executing file as a program, or from terminal by `chmod +x FireDM_xxx.AppImage`
+            - ffmpeg is not included in this image and must be available on your system, to check for ffmpeg use this command:
+            ```
+            which ffmpeg
+            # expected output
+            /usr/bin/ffmpeg
+            ```
+            to install ffmpeg you can `sudo apt install ffmpeg` on debian based or ` sudo pacman -S ffmpeg` on Arch based
+            - The binary version ".AppImage" prepared by "appimage-builder" on linuxmint, and tested on ubuntu 20.04 and Manjaro kde
+            ---
+
+            **changelog:**
+            ${{ env.chagelog }}
+
           draft: true
           prerelease: false
 
-      # upload file to github release page 00
-      - name: Upload the artifacts
-        uses: skx/github-action-publish-binaries@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          releaseId: ${{ steps.create_release.outputs.id }}
-          args: './FireDM/scripts/appimage/FireDM*.AppImage ./FireDM/scripts/exe_build/FireDM*.zip'
