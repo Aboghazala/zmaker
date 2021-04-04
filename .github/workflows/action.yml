@@ -51,7 +51,8 @@ jobs:
       #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #  run: python3 ./create_new_release.py ${{ secrets.GITHUB_TOKEN }}
       - name: get version name
-        run: echo "version=$(cat ./testfile.txt)" >> $GITHUB_ENV
+        run: |
+          echo "version=$(cat ./testfile.txt)" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -67,3 +68,15 @@ jobs:
             - Second Change
           draft: true
           prerelease: false
+
+#      # upload file to github release page 00
+#      - name: Upload the artifacts
+#        uses: skx/github-action-publish-binaries@master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          args: './FireDM/scripts/appimage/*.AppImage ./FireDM/scripts/exe_build/*.zip'
+
+      - name: Print the URL of the release draft
+#        if: steps.create_release.outputs.id != ''
+        run: echo release id is ${{ steps.create_release.outputs.id }}
