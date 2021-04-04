@@ -76,8 +76,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           releaseId: ${{ steps.create_release.outputs.id }}
-          args: './FireDM/scripts/appimage/*.AppImage ./FireDM/scripts/exe_build/*.zip'
-
-#      - name: Print the URL of the release draft
-##        if: steps.create_release.outputs.id != ''
-#        run: echo release id is ${{ steps.create_release.outputs.id }}
+          args: './FireDM/scripts/appimage/FireDM*.AppImage ./FireDM/scripts/exe_build/FireDM*.zip'
