@@ -5,7 +5,8 @@ project_folder = os.path.dirname(current_folder)
 print('current_folder:', current_folder)
 print('project_folder:', project_folder)
 
-body = f"""# Release info:
+body = f"""
+# Release info:
 **Windows: [.zip file]**
 - Portable version for windows 32bit and 64bit, no installation needed, just extract to any folder and run FireDM.exe file
 - ffmpeg.exe included, you can download latest version [here](https://ffmpeg.zeranoe.com/builds/)
