@@ -33,8 +33,7 @@ jobs:
 
       - name: create release body
         run: |
-          cat <<EOF > ./release-body.txt
-          Release info:
+          echo 'Release info:
           **Windows: [.zip file]**
           - Portable version for windows 32bit and 64bit, no installation needed, just extract to any folder and run FireDM.exe file
           - ffmpeg.exe included, you can download latest version [here](https://ffmpeg.zeranoe.com/builds/)
@@ -54,8 +53,7 @@ jobs:
           ---
 
           **changelog:**
-
-          EOF
+          '  > ./release-body.txt
 
           sed 's/\r$//' ./FireDM/ChangeLog.txt | sed -e '/^$/,$d' >> ./release-body.txt
 
