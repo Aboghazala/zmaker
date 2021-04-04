@@ -15,6 +15,9 @@ data = str(data).encode('utf-8')
 
 request = Request(url, headers=headers, data=data)
 
-res = urlopen(request)
+try:
+    res = urlopen(request)
+except Exception as e:
+        print(e)
 print(res.headers)
 print(res.read())
