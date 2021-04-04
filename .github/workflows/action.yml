@@ -58,7 +58,6 @@ jobs:
           EOF
 
           sed 's/\r$//' ./FireDM/ChangeLog.txt | sed -e '/^$/,$d' >> ./release-body.txt
-          cat ./release-body.txt
 
 
       - name: Create Release
