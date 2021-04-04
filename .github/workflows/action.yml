@@ -46,23 +46,24 @@ jobs:
           # python3 ./appimage-quickbuild.py
 
       # making pre-release
-      - name: create pre-release
+      #- name: create pre-release
       #  env:
       #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 ./create_new_release.py ${{ secrets.GITHUB_TOKEN }}
+      #  run: python3 ./create_new_release.py ${{ secrets.GITHUB_TOKEN }}
+      - name: get version name
+        run: echo "version=$(cat ./testfile.txt)" >> $GITHUB_ENV
 
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: Release ${{ github.ref }}
-#          body: |
-#            Changes in this Release
-#            - First Change
-#            - Second Change
-#          draft: true
-#          prerelease: false
-
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.version }}
+          release_name: My Release version ${{ env.version }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: true
+          prerelease: false
