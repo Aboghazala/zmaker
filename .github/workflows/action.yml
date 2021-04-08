@@ -5,7 +5,7 @@ on:
   # Triggers the workflow on "version.py" file changed
   push:
     paths:
-      - 'testfile.txt'
+      - '/m/version.py'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
